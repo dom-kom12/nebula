@@ -86,6 +86,28 @@
 	<footer>
 		<p class="red">© 2025 Wszelkie Prawa Zastrzeżone!</p>
 	</footer>
-		
+	<script>
+	// Funkcja do wykrywania języka przeglądarki
+function detectLanguage() {
+  const userLang = navigator.language || navigator.userLanguage;
+  const langDisplay = document.getElementById('language');
+  langDisplay.innerText = `Język Twojej przeglądarki: ${userLang}`;
+
+  if (userLang === 'pl') {
+    document.getElementById('content').innerText = 'Witaj na stronie!';
+  } else {
+    document.getElementById('content').innerText = 'Welcome to the page!';
+  }
+}
+
+// Funkcja do tłumaczenia treści na angielski
+function translateContent() {
+  document.getElementById('content').innerText = 'Welcome to the page!';
+}
+
+// Wywołanie funkcji detekcji języka na początku
+window.onload = detectLanguage;
+
+	</script>
 </body>
 </html>
