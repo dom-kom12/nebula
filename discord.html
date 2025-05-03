@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discord Widget Panel</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --text-color: #ffffff;
+      --button-bg: #5865f2;
+      --button-hover: #4752c4;
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+
+    body.light {
+      --bg-color: #f4f4f4;
+      --text-color: #111;
+      --button-bg: #5865f2;
+      --button-hover: #3742b3;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    iframe {
+      border-radius: 12px;
+      box-shadow: 0 0 20px var(--shadow);
+    }
+
+    #discordWidget {
+      width: 500px;
+      height: 550px;
+    }
+
+    .small-widget {
+      width: 500px;
+      height: 550px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    button, a.button-link {
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+      width: 200px;
+      text-align: center;
+    }
+
+    button:hover, a.button-link:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 Dołącz do naszego Discorda!</h1>
+  <p>Rozmawiaj z nami, pytaj, pomagaj – wszystko na żywo!</p>
+
+  <div class="main-content">
+    <iframe id="discordWidget"
+      src="https://discord.com/widget?id=1332052358628245624&theme=dark"
+      allowtransparency="true"
+      frameborder="0"
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+    </iframe>
+
+    <iframe class="small-widget"
+      src="https://discord.com/widget?id=1367785325245497344&theme=dark"
+      allowtransparency="true"
+      frameborder="0"
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+    </iframe>
+
+    <div class="buttons">
+      <button onclick="refreshWidget()">🔄 Odśwież</button>
+      <a class="button-link" href="link-discord.html" target="_blank">🚀 Otwórz Discord</a>
+      <button onclick="toggleTheme()">🌓 Zmień motyw</button>
+    </div>
+  </div>
+
+  <script>
+    function refreshWidget() {
+      const iframe = document.getElementById("discordWidget");
+      iframe.src = iframe.src;
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+      const iframe = document.getElementById("discordWidget");
+      const currentTheme = document.body.classList.contains("light") ? "light" : "dark";
+      const url = new URL(iframe.src);
+      url.searchParams.set("theme", currentTheme);
+      iframe.src = url.toString();
+    }
+  </script>
+</body>
+</html>
