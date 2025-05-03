@@ -25,5 +25,39 @@
     <h2>Treść dostępna offline!</h2>
     <p>Ta strona może działać offline, dzięki pamięci podręcznej.</p>
   </div>
+<script>
+  // Sprawdzanie statusu połączenia
+function updateConnectionStatus() {
+  const status = document.getElementById('status');
+  const offlineMessage = document.getElementById('offline-message');
+  
+  if (navigator.onLine) {
+    status.innerText = 'Połączono z Internetem';
+    offlineMessage.style.display = 'none';
+  } else {
+    status.innerText = 'Brak połączenia';
+    offlineMessage.style.display = 'block';
+  }
+}
+
+// Rejestracja service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => {
+      console.log('Service Worker zarejestrowany pomyślnie!');
+    })
+    .catch(error => {
+      console.log('Błąd rejestracji Service Worker:', error);
+    });
+}
+
+// Nasłuchiwanie zmian w połączeniu z internetem
+window.addEventListener('online', updateConnectionStatus);
+window.addEventListener('offline', updateConnectionStatus);
+
+// Na początku strony
+window.onload = updateConnectionStatus;
+
+</script>
 </body>
 </html>
