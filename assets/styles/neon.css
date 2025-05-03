@@ -1,0 +1,16 @@
+body {
+  background-color: #111;
+  color: #39ff14;
+}
+
+header {
+  background-color: #000;
+  color: #39ff14;
+  padding: 20px;
+  text-align: center;
+}
+
+button.theme-btn {
+  background-color: #39ff14;
+  color: #111;
+}
