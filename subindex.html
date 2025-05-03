@@ -3,37 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menadżer motywów</title>
-  <link id="theme-style" rel="stylesheet" href="assets/styles/light.css">
+  <title>Skaner QR</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background 0.3s, color 0.3s;
+      text-align: center;
     }
-    .theme-btn {
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
+    video {
+      width: 100%;
+      height: auto;
+      border: 1px solid black;
+    }
+    #output {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Wybierz motyw</h1>
-    <button class="theme-btn" onclick="changeTheme('light')">Jasny</button>
-    <button class="theme-btn" onclick="changeTheme('dark')">Ciemny</button>
-    <button class="theme-btn" onclick="changeTheme('neon')">Neonowy</button>
-  </header>
-  <main>
-    <h2>To jest przykładowa strona z różnymi motywami!</h2>
-    <p>Wybierz motyw, aby zmienić wygląd strony.</p>
-  </main>
-  <script src="main/assets/scripts/script.js"></script>
+  <h1>Skaner kodów QR</h1>
+  <video id="video" width="300" height="200" autoplay></video>
+  <div id="output">Skanuj kod QR, aby go odczytać!</div>
+  
+  <script>
+    // Uzyskanie dostępu do kamery
+const video = document.getElementById('video');
+const output = document.getElementById('output');
+
+// Ustawienia kamery
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+  .then((stream) => {
+    video.srcObject = stream;
+    video.setAttribute('playsinline', true); // Działa na urządzeniach mobilnych
+    video.play();
+    scanQRCode(); // Rozpoczęcie skanowania
+  })
+  .catch(err => {
+    output.innerText = 'Błąd dostępu do kamery: ' + err;
+  });
+
+// Funkcja do skanowania kodów QR
+function scanQRCode() {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+
+  // Co klatkę skanować obraz z kamery
+  function tick() {
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+      if (code) {
+        output.innerText = 'Znaleziony kod QR: ' + code.data;
+      } else {
+        output.innerText = 'Skanowanie w toku...';
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+}
+
+  </script>
 </body>
 </html>
