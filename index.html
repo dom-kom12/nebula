@@ -74,40 +74,11 @@
 		<a href="about.html"><button><strong>O Nas</strong></button></a>
 		<a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
 		</div>
-	<header>
-    		<h1>Detektor Języka</h1>
-    		<p id="language">Ładowanie...</p>
-  		    <h2 id="content">Witaj na stronie!</h2>
-    <button onclick="translateContent()">Tłumacz na angielski</button>
-	</header>
-
 	</main>
 
 	<footer>
 		<p class="red">© 2025 Wszelkie Prawa Zastrzeżone!</p>
 	</footer>
-	<script>
-	// Funkcja do wykrywania języka przeglądarki
-function detectLanguage() {
-  const userLang = navigator.language || navigator.userLanguage;
-  const langDisplay = document.getElementById('language');
-  langDisplay.innerText = `Język Twojej przeglądarki: ${userLang}`;
-
-  if (userLang === 'pl') {
-    document.getElementById('content').innerText = 'Witaj na stronie!';
-  } else {
-    document.getElementById('content').innerText = 'Welcome to the page!';
-  }
-}
-
-// Funkcja do tłumaczenia treści na angielski
-function translateContent() {
-  document.getElementById('content').innerText = 'Welcome to the page!';
-}
-
-// Wywołanie funkcji detekcji języka na początku
-window.onload = detectLanguage;
-
-	</script>
+	
 </body>
 </html>
