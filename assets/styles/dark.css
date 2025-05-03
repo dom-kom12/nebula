@@ -1,0 +1,15 @@
+body {
+  background-color: #181818;
+  color: #f0f0f0;
+}
+
+header {
+  background-color: #333;
+  color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+button.theme-btn {
+  background-color: #555;
+}
