@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menadżer motywów</title>
+  <link id="theme-style" rel="stylesheet" href="assets/styles/light.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .theme-btn {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Wybierz motyw</h1>
+    <button class="theme-btn" onclick="changeTheme('light')">Jasny</button>
+    <button class="theme-btn" onclick="changeTheme('dark')">Ciemny</button>
+    <button class="theme-btn" onclick="changeTheme('neon')">Neonowy</button>
+  </header>
+  <main>
+    <h2>To jest przykładowa strona z różnymi motywami!</h2>
+    <p>Wybierz motyw, aby zmienić wygląd strony.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
