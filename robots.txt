@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://nebula-git-main-dominiks-projects-73f694c7.vercel.app/sitemap.xml
