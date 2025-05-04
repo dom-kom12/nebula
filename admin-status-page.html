@@ -129,5 +129,18 @@
 
     createForm();
   </script>
+  <script>
+    const password = "mojehaslo"; // ← hasło
+  
+    if (sessionStorage.getItem("has_access") !== "true") {
+      const input = prompt("Podaj hasło:");
+      if (input === password) {
+        sessionStorage.setItem("has_access", "true");
+      } else {
+        alert("Niepoprawne hasło!");
+        window.location.href = "/";
+      }
+    }
+  </script>  
 </body>
 </html>
