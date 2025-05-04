@@ -44,6 +44,14 @@
 <body>
   <h1>Panel Administratora – Status Usług</h1>
 
+  <!-- Element, który trzyma formularz -->
+  <div class="service-editor" id="form-container"></div>
+
+  <!-- Element, z którego index.html i JS sprawdzają status -->
+  <div id="system-status" style="display:none;">
+    <!-- Przechowywany status serwisu głównego -->
+    <!-- Wartość aktualizowana dynamicznie przez JavaScript -->
+  </div>
 
   <script>
     const services = {
@@ -52,7 +60,6 @@
       "notifications": "Powiadomienia",
       "discord": "Discord Server",
       "offline-mode": "Tryb Offline",
-      <div class="service-editor" id="form-container">online</div>,
       "backup-service": "Usługa Kopii Zapasowych",
       "data-sync": "Synchronizacja Danych",
       "user-auth": "Autentykacja Użytkowników",
@@ -96,6 +103,11 @@
         const val = document.getElementById(key).value;
         localStorage.setItem("status_" + key, val);
       }
+
+      // Zaktualizuj ukryty status serwera głównego
+      document.getElementById("system-status").textContent =
+        document.getElementById("main-server").value;
+
       alert("Statusy zostały zapisane!");
     }
 
@@ -105,12 +117,15 @@
         if (stored) {
           const select = document.getElementById(key);
           if (select) select.value = stored;
+
+          if (key === "main-server") {
+            document.getElementById("system-status").textContent = stored;
+          }
         }
       }
     }
 
     createForm();
   </script>
-  <script src="/status-check.js"></script>
 </body>
 </html>
