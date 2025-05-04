@@ -43,15 +43,7 @@
 </head>
 <body>
   <h1>Panel Administratora – Status Usług</h1>
-
-  <!-- Element, który trzyma formularz -->
-  <div class="service-editor" id="form-container"></div>
-
-  <!-- Element, z którego index.html i JS sprawdzają status -->
-  <div id="system-status" style="display:none;">
-    <!-- Przechowywany status serwisu głównego -->
-    <!-- Wartość aktualizowana dynamicznie przez JavaScript -->
-  </div>
+  <div class="service-editor" id="form-container"></div> <!-- ✅ Poprawnie -->
 
   <script>
     const services = {
@@ -79,6 +71,8 @@
 
         const select = document.createElement("select");
         select.id = key;
+        select.classList.add("status-dropdown");
+
         ["online", "degraded", "offline"].forEach(status => {
           const option = document.createElement("option");
           option.value = status;
@@ -103,11 +97,6 @@
         const val = document.getElementById(key).value;
         localStorage.setItem("status_" + key, val);
       }
-
-      // Zaktualizuj ukryty status serwera głównego
-      document.getElementById("system-status").textContent =
-        document.getElementById("main-server").value;
-
       alert("Statusy zostały zapisane!");
     }
 
@@ -117,10 +106,6 @@
         if (stored) {
           const select = document.getElementById(key);
           if (select) select.value = stored;
-
-          if (key === "main-server") {
-            document.getElementById("system-status").textContent = stored;
-          }
         }
       }
     }
