@@ -101,7 +101,7 @@
         <a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
         <div class="bold"></div>
         <p><strong>Nie Masz Sieci???</strong></p>
-        <button onclick="goOffline()"><strong>Wciśnij mnie</strong></button>
+        <button onclick="checkOffline()"><strong>Wciśnij mnie</strong></button>
         <div class="offline-message" id="offlineMessage">
             <p>Nie wykryto połączenia z siecią. Czy chcesz przejść na stronę offline?</p>
             <button id="goOfflineButton">OK</button>
@@ -116,7 +116,7 @@
     <script>
         // Funkcja sprawdzająca połączenie
         function checkConnection() {
-            // Sprawdzenie statusu połączenia
+            // Sprawdzamy status połączenia
             if (!navigator.onLine) {
                 document.getElementById('offlineMessage').style.display = 'block'; // Pokazuje komunikat offline
             } else {
@@ -124,25 +124,27 @@
             }
         }
 
-        // Funkcja przejścia na stronę offline
-        function goOffline() {
+        // Funkcja uruchamiająca przekierowanie na stronę offline
+        function checkOffline() {
             if (!navigator.onLine) {
-                document.getElementById('offlineMessage').style.display = 'block';
+                document.getElementById('offlineMessage').style.display = 'block'; // Pokazuje komunikat offline
             } else {
-                window.location.href = 'off.html';
+                window.location.href = 'off.html'; // Jeśli jest połączenie, przekierowujemy na stronę offline
             }
         }
 
-        // Funkcja, która wykonuje przekierowanie na stronę offline po kliknięciu
+        // Funkcja przejścia na stronę offline po kliknięciu w przycisk
         document.getElementById('goOfflineButton').addEventListener('click', function() {
-            window.location.href = 'off.html';
+            window.location.href = 'off.html'; // Po kliknięciu przechodzimy na stronę offline
         });
 
-        // Uruchomienie sprawdzania połączenia co sekundę
-        setInterval(checkConnection, 1000);
+        // Sprawdzamy połączenie zaraz po załadowaniu strony
+        window.onload = function() {
+            checkConnection();
+        }
 
-        // Inicjalne sprawdzenie połączenia
-        checkConnection();
+        // Sprawdzamy połączenie co 1 sekundę
+        setInterval(checkConnection, 1000);
     </script>
 </body>
 </html>
