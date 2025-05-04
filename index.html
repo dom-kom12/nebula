@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en"><!DOCTYPE html>
 <html lang="en">
 <head>
     <style>
@@ -115,124 +114,35 @@
     </footer>
 
     <script>
-        // Sprawdza, czy użytkownik ma połączenie z siecią
+        // Funkcja sprawdzająca połączenie
         function checkConnection() {
+            // Sprawdzenie statusu połączenia
             if (!navigator.onLine) {
-                // Jeśli nie ma połączenia, pokaż komunikat offline
-                document.getElementById('offlineMessage').style.display = 'block';
+                document.getElementById('offlineMessage').style.display = 'block'; // Pokazuje komunikat offline
             } else {
-                document.getElementById('offlineMessage').style.display = 'none';
+                document.getElementById('offlineMessage').style.display = 'none'; // Ukrywa komunikat offline, gdy jest połączenie
             }
         }
 
-        // Przechodzi do strony offline, gdy użytkownik kliknie OK
+        // Funkcja przejścia na stronę offline
         function goOffline() {
             if (!navigator.onLine) {
-                // Jeśli użytkownik jest offline, wyświetl pytanie o przejście na stronę offline
                 document.getElementById('offlineMessage').style.display = 'block';
             } else {
                 window.location.href = 'off.html';
             }
         }
 
-        // Przekierowuje użytkownika na stronę offline
+        // Funkcja, która wykonuje przekierowanie na stronę offline po kliknięciu
         document.getElementById('goOfflineButton').addEventListener('click', function() {
             window.location.href = 'off.html';
         });
 
-        // Sprawdzanie połączenia co sekundę
+        // Uruchomienie sprawdzania połączenia co sekundę
         setInterval(checkConnection, 1000);
 
-        // Początkowe sprawdzenie połączenia
+        // Inicjalne sprawdzenie połączenia
         checkConnection();
     </script>
-</body>
-</html>
-
-<head>
-	<style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-	
-	body {
-		font-family: Arial, sans-serif;
-		background-color: #f4f4f4;
-	}
-	
-	header, footer {
-		background-color: #6b67673d;
-		color: #000000;
-		padding: 1.5rem;
-		text-align: center;
-	}
-	
-	main {
-		padding: 2rem;
-	}
-	
-	h1 {
-		font-size: 2rem;
-		color: #1b1a1a;
-	}
-	
-	.bold {
-		background-color: #6b67673d; /* kolor paska */
-		height: 60px;                /* wysokość paska/przerwy */
-		border: 5px solid #1b1a1a;   /* ramka wokół */
-		margin: 1rem 0;              /* odstęp od innych elementów */
-	}
-
-	.red {
-    background-color: red;
-    border: 5px red;
-}
-
-.banner {
-  background-color: #d3d3d3;
-  color: #000;
-  padding: 1.5rem 1rem;       /* więcej miejsca wewnątrz (góra/dół i lewo/prawo) */
-  border: 5px solid #1b1a1a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100px;
-  box-sizing: border-box;     /* zapobiega wyciekaniu paddingu poza box */
-  text-align: center;         /* dodatkowo – tekst wyśrodkowany */
-  width: 100%;
-}
-
-.offline {
-      color: red;
-      font-weight: bold;
-    }
-</style>
-	<meta name="google-site-verification" content="3GLuCD8xxZt4vZlqfhc61gW2vMaaqrIqfvP9V8lXBjw" />
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Strona Główna</title>
-	<meta name="stylesheet" href="assets/styles/main.css">
-</head>
-<body>
-	
-	<header>
-		<div class="bold"><h1><strong>Witaj Na Stronie Głównej</strong></h1></div>
-		<div class="banner"><h1><strong>Nasz Zespół Pracuje nad tą Stroną</strong></h1></div>		  
-	</header>
-
-	<main>
-		<div class="bold">
-		<a href="about.html"><button><strong>O Nas</strong></button></a>
-		<a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
-		<div class="bold"></div>
-		<p><strong>Nie Masz Sieci???</strong></p><a href="off.html"><button><strong>Wciśnij mnie</strong></button><p></p>
-		</div>
-	</main>
-
-	<footer>
-		<p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
-	</footer>
 </body>
 </html>
