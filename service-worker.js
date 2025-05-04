@@ -5,6 +5,8 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/off.html',
+  '/status-page.html',
+  '/kontakt.html',
 ];
 
 // Instalacja – cache’ujemy pliki
