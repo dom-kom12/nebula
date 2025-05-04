@@ -1,4 +1,3 @@
-<!-- status.html (strona widoku statusów) -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -47,40 +46,23 @@
         <th>Status</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>Serwer Główny</td>
-        <td id="status-main-server">Ładowanie...</td>
-      </tr>
-      <tr>
-        <td>API</td>
-        <td id="status-api">Ładowanie...</td>
-      </tr>
-      <tr>
-        <td>Strona logowania</td>
-        <td id="status-login">Ładowanie...</td>
-      </tr>
-      <tr>
-        <td>Baza danych</td>
-        <td id="status-db">Ładowanie...</td>
-      </tr>
-      <tr>
-        <td>Powiadomienia</td>
-        <td id="status-notifications">Ładowanie...</td>
-      </tr>
-      <tr>
-        <td>Discord Server</td>
-        <td id="discord">Ładowanie...</td>
-      </tr>
-      
-    </tbody>
+    <tbody id="status-body"></tbody>
   </table>
 
   <script>
-    const services = ["main-server", "api", "login", "db", "notifications", "discord", "tryb Offline", "status Systemu oeracyjnego"];
+    const services = {
+      "main-server": "Serwer Główny",
+      "api": "API",
+      "login": "Strona logowania",
+      "db": "Baza danych",
+      "notifications": "Powiadomienia",
+      "discord": "Discord Server",
+      "offline-mode": "Tryb Offline",
+      "system-status": "System operacyjny"
+    };
 
     function getStatusClass(status) {
-      switch(status) {
+      switch (status) {
         case "online": return "status-online";
         case "degraded": return "status-degraded";
         case "offline": return "status-offline";
@@ -89,12 +71,17 @@
     }
 
     function loadStatuses() {
-      services.forEach(service => {
-        const status = localStorage.getItem("status_" + service) || "offline";
-        const el = document.getElementById("status-" + service);
-        el.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-        el.className = getStatusClass(status);
-      });
+      const tbody = document.getElementById("status-body");
+      tbody.innerHTML = "";
+      for (const key in services) {
+        const status = localStorage.getItem("status_" + key) || "offline";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${services[key]}</td>
+          <td class="${getStatusClass(status)}">${status.charAt(0).toUpperCase() + status.slice(1)}</td>
+        `;
+        tbody.appendChild(tr);
+      }
     }
 
     loadStatuses();
