@@ -1,25 +1,18 @@
-// status-check.js
-
 async function checkSystemStatus() {
   try {
     const response = await fetch('/status-page.html');
-    const text = await response.text();
+    const html = await response.text();
 
-    // Stwórz tymczasowy DOM z pobranej strony
+    // Utwórz tymczasowy DOM
     const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
+    const doc = parser.parseFromString(html, 'text/html');
+    const status = doc.querySelector('system-status')?.textContent.trim().toLowerCase();
 
-    const statusElement = doc.getElementById('system-status');
-    const systemStatus = statusElement?.textContent.trim().toLowerCase();
-
-    // Jeśli status to 'offline', przekieruj
-    if (systemStatus === 'offline') {
-      if (!window.location.pathname.includes('system-offline.html')) {
-        window.location.href = '/system-offline.html';
-      }
+    if (status === 'offline' && !location.pathname.includes('system-offline.html')) {
+      window.location.href = '/system-offline.html';
     }
-  } catch (error) {
-    console.error('Błąd pobierania statusu systemu:', error);
+  } catch (e) {
+    console.error('Nie można sprawdzić statusu systemu:', e);
   }
 }
 
