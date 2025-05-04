@@ -1,0 +1,109 @@
+<!-- admin-status.html (panel administratora do edycji statusu) -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Statusów (Admin)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0e0e0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .service-editor {
+      background: #fff;
+      padding: 20px;
+      margin: 10px auto;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel Administratora – Status Usług</h1>
+  <div class="service-editor">
+    <label for="main-server">Serwer Główny</label>
+    <select id="main-server">
+      <option value="online">Online</option>
+      <option value="degraded">Degraded</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <label for="api">API</label>
+    <select id="api">
+      <option value="online">Online</option>
+      <option value="degraded">Degraded</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <label for="login">Strona logowania</label>
+    <select id="login">
+      <option value="online">Online</option>
+      <option value="degraded">Degraded</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <label for="db">Baza danych</label>
+    <select id="db">
+      <option value="online">Online</option>
+      <option value="degraded">Degraded</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <label for="notifications">Powiadomienia</label>
+    <select id="notifications">
+      <option value="online">Online</option>
+      <option value="degraded">Degraded</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <button onclick="saveStatuses()">Zapisz</button>
+  </div>
+
+  <script>
+    const fields = ["main-server", "api", "login", "db", "notifications"];
+
+    function saveStatuses() {
+      fields.forEach(field => {
+        const value = document.getElementById(field).value;
+        localStorage.setItem("status_" + field, value);
+      });
+      alert("Zapisano statusy!");
+    }
+
+    function loadStatuses() {
+      fields.forEach(field => {
+        const stored = localStorage.getItem("status_" + field);
+        if (stored) {
+          document.getElementById(field).value = stored;
+        }
+      });
+    }
+
+    loadStatuses();
+  </script>
+</body>
+</html>
