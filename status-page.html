@@ -1,78 +1,98 @@
-<!-- status.html (strona statusowa jak status.epicgames.com) -->
+<!-- status.html (strona widoku statusów) -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Status Systemu</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #282c34;
-      color: white;
+      background: #f7f7f7;
       padding: 20px;
+    }
+    h1 {
       text-align: center;
     }
-    .status {
+    .status-table {
       max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 20px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 100%;
     }
-    .service {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
+    .status-table th, .status-table td {
+      padding: 12px;
+      text-align: left;
       border-bottom: 1px solid #ddd;
     }
-    .status-dot {
-      height: 12px;
-      width: 12px;
-      border-radius: 50%;
-      display: inline-block;
+    .status-online {
+      color: green;
+      font-weight: bold;
     }
-    .online { background: #4caf50; }
-    .offline { background: #f44336; }
-    .degraded { background: #ffc107; }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #888;
+    .status-degraded {
+      color: orange;
+      font-weight: bold;
+    }
+    .status-offline {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Status Systemu</h1>
-    <p>Aktualizacja na żywo</p>
-  </header>
-
-  <div class="status" id="status-box">
-    <div class="service"><span>Serwer Główny</span><span class="status-dot online"></span></div>
-    <div class="service"><span>API</span><span class="status-dot degraded"></span></div>
-    <div class="service"><span>Strona logowania</span><span class="status-dot online"></span></div>
-    <div class="service"><span>Baza danych</span><span class="status-dot offline"></span></div>
-    <div class="service"><span>Powiadomienia</span><span class="status-dot online"></span></div>
-  </div>
-
-  <footer>
-    Ostatnia aktualizacja: <span id="time"></span>
-  </footer>
+  <h1>Status Usług</h1>
+  <table class="status-table">
+    <thead>
+      <tr>
+        <th>Usługa</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Serwer Główny</td>
+        <td id="status-main-server">Ładowanie...</td>
+      </tr>
+      <tr>
+        <td>API</td>
+        <td id="status-api">Ładowanie...</td>
+      </tr>
+      <tr>
+        <td>Strona logowania</td>
+        <td id="status-login">Ładowanie...</td>
+      </tr>
+      <tr>
+        <td>Baza danych</td>
+        <td id="status-db">Ładowanie...</td>
+      </tr>
+      <tr>
+        <td>Powiadomienia</td>
+        <td id="status-notifications">Ładowanie...</td>
+      </tr>
+    </tbody>
+  </table>
 
   <script>
-    const updateTime = () => {
-      const now = new Date();
-      document.getElementById('time').innerText = now.toLocaleString();
+    const services = ["main-server", "api", "login", "db", "notifications"];
+
+    function getStatusClass(status) {
+      switch(status) {
+        case "online": return "status-online";
+        case "degraded": return "status-degraded";
+        case "offline": return "status-offline";
+        default: return "";
+      }
     }
-    updateTime();
-    setInterval(updateTime, 60000); // aktualizuj co minutę
+
+    function loadStatuses() {
+      services.forEach(service => {
+        const status = localStorage.getItem("status_" + service) || "offline";
+        const el = document.getElementById("status-" + service);
+        el.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        el.className = getStatusClass(status);
+      });
+    }
+
+    loadStatuses();
   </script>
 </body>
 </html>
