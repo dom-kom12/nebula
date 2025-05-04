@@ -68,11 +68,16 @@
         <td>Powiadomienia</td>
         <td id="status-notifications">Ładowanie...</td>
       </tr>
+      <tr>
+        <td>Discord Server</td>
+        <td id="discord">Ładowanie...</td>
+      </tr>
+      
     </tbody>
   </table>
 
   <script>
-    const services = ["main-server", "api", "login", "db", "notifications"];
+    const services = ["main-server", "api", "login", "db", "notifications", "discord", "tryb Offline", "status Systemu oeracyjnego"];
 
     function getStatusClass(status) {
       switch(status) {
