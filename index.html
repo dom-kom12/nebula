@@ -53,26 +53,26 @@
     <p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
   </footer>
 
-  <!-- 🧠 SYSTEM-OFFLINE SPRAWDZANIE -->
-  <script>
-    async function checkSystemStatus() {
-      try {
-        const response = await fetch('/status-page.html');
-        const html = await response.text();
+<script>
+  async function checkSystemStatus() {
+    try {
+      const response = await fetch('/status-page.html');
+      const html = await response.text();
 
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const status = doc.querySelector('#system-status')?.textContent.trim().toLowerCase();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const status = doc.querySelector('#system-status')?.textContent.trim().toLowerCase();
 
-        if (status === 'offline' && !window.location.pathname.includes('system-offline.html')) {
-          window.location.href = '/system-offline.html';
-        }
-      } catch (error) {
-        console.error('Błąd sprawdzania statusu systemu:', error);
+      if (status === 'offline' && !window.location.pathname.includes('system-offline.html')) {
+        window.location.href = '/system-offline.html';
       }
+    } catch (error) {
+      console.error('Błąd sprawdzania statusu systemu:', error);
     }
+  }
 
-    setInterval(checkSystemStatus, 5000);
-  </script>
+  setInterval(checkSystemStatus, 5000);
+</script>
+
 </body>
 </html>
