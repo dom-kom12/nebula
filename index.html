@@ -1,136 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-        
-        header, footer {
-            background-color: #6b67673d;
-            color: #000000;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        main {
-            padding: 2rem;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            color: #1b1a1a;
-        }
-        
-        .bold {
-            background-color: #6b67673d; /* kolor paska */
-            height: 60px;                /* wysokość paska/przerwy */
-            border: 5px solid #1b1a1a;   /* ramka wokół */
-            margin: 1rem 0;              /* odstęp od innych elementów */
-        }
+  <meta charset="UTF-8">
+  <title>Strona Główna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
 
-        .red {
-            background-color: red;
-            border: 5px red;
-        }
+    header, footer {
+      background-color: #6b67673d;
+      color: #000;
+      padding: 1.5rem;
+      text-align: center;
+    }
 
-        .banner {
-            background-color: #d3d3d3;
-            color: #000;
-            padding: 1.5rem 1rem;       /* więcej miejsca wewnątrz (góra/dół i lewo/prawo) */
-            border: 5px solid #1b1a1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100px;
-            box-sizing: border-box;     /* zapobiega wyciekaniu paddingu poza box */
-            text-align: center;         /* dodatkowo – tekst wyśrodkowany */
-            width: 100%;
-        }
+    .bold {
+      background-color: #6b67673d;
+      height: 60px;
+      border: 5px solid #1b1a1a;
+      margin: 1rem 0;
+    }
 
-        .offline {
-            color: red;
-            font-weight: bold;
-        }
-
-        .offline-message {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background-color: #ffcc00;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    <meta name="google-site-verification" content="3GLuCD8xxZt4vZlqfhc61gW2vMaaqrIqfvP9V8lXBjw" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Główna</title>
-    <meta name="stylesheet" href="assets/styles/main.css">
+    .banner {
+      background-color: #d3d3d3;
+      border: 5px solid #1b1a1a;
+      padding: 1.5rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    
-    <header>
-        <div class="bold"><h1><strong>Witaj Na Stronie Głównej</strong></h1></div>
-        <div class="banner"><h1><strong>Nasz Zespół Pracuje nad tą Stroną</strong></h1></div>          
-    </header>
 
-    <main>
-        <div class="bold">
-        <a href="about.html"><button><strong>O Nas</strong></button></a>
-        <a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
-        <div class="bold"></div>
-        <p><strong>Nie Masz Sieci???</strong></p>
-        <button onclick="checkOffline()"><strong>Wciśnij mnie</strong></button>
-        <div class="offline-message" id="offlineMessage">
-            <p>Nie wykryto połączenia z siecią. Czy chcesz przejść na stronę offline?</p>
-            <button id="goOfflineButton">OK</button>
-        </div>
-        </div>
-    </main>
+  <header>
+    <div class="bold"><h1><strong>Witaj Na Stronie Głównej</strong></h1></div>
+    <div class="banner"><h1><strong>Nasz Zespół Pracuje nad tą Stroną</strong></h1></div>
+  </header>
 
-    <footer>
-        <p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
-    </footer>
-<script>
-  // Rejestracja Service Workera
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log("Service Worker zarejestrowany."))
-      .catch(error => console.error("Błąd rejestracji SW:", error));
-  }
+  <main>
+    <div class="bold">
+      <a href="about.html"><button><strong>O Nas</strong></button></a>
+      <a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
+      <div class="bold"></div>
+      <p><strong>Nie Masz Sieci???</strong></p>
+      <a href="off.html"><button><strong>Wciśnij mnie</strong></button></a>
+    </div>
+  </main>
 
-  // Co sekundę sprawdź połączenie i zapytaj o przejście do trybu offline
-  setInterval(() => {
-    if (!navigator.onLine) {
-      const confirmOffline = confirm("Nie wykryto połączenia z Internetem. Czy chcesz przejść do strony offline?");
-      if (confirmOffline) {
-        window.location.href = 'off.html';
+  <footer>
+    <p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
+  </footer>
+
+  <!-- 🧠 SYSTEM-OFFLINE SPRAWDZANIE -->
+  <script>
+    async function checkSystemStatus() {
+      try {
+        const response = await fetch('/status-page.html');
+        const html = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const status = doc.querySelector('#system-status')?.textContent.trim().toLowerCase();
+
+        if (status === 'offline' && !window.location.pathname.includes('system-offline.html')) {
+          window.location.href = '/system-offline.html';
+        }
+      } catch (error) {
+        console.error('Błąd sprawdzania statusu systemu:', error);
       }
     }
-  }, 1000);
-</script>
-<script src="/status-check.js"></script>
 
+    setInterval(checkSystemStatus, 5000);
+  </script>
 </body>
 </html>
