@@ -1,12 +1,11 @@
 async function checkSystemStatus() {
   try {
-    const response = await fetch('/status-page.html');
+    const response = await fetch('/admin-status-page.html');
     const html = await response.text();
 
-    // Utwórz tymczasowy DOM
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
-    const status = doc.querySelector('system-status')?.textContent.trim().toLowerCase();
+    const status = doc.querySelector('#system-status')?.textContent.trim().toLowerCase();
 
     if (status === 'offline' && !location.pathname.includes('system-offline.html')) {
       window.location.href = '/system-offline.html';
@@ -16,5 +15,4 @@ async function checkSystemStatus() {
   }
 }
 
-// Sprawdzaj co 5 sekund
 setInterval(checkSystemStatus, 5000);
