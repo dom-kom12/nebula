@@ -1,9 +1,8 @@
-<!-- admin-status.html (panel administratora do edycji statusu) -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Statusów (Admin)</title>
+  <title>Panel Administratora – Status</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -44,66 +43,68 @@
 </head>
 <body>
   <h1>Panel Administratora – Status Usług</h1>
-  <div class="service-editor">
-    <label for="main-server">Serwer Główny</label>
-    <select id="main-server">
-      <option value="online">Online</option>
-      <option value="degraded">Degraded</option>
-      <option value="offline">Offline</option>
-    </select>
-
-    <label for="api">API</label>
-    <select id="api">
-      <option value="online">Online</option>
-      <option value="degraded">Degraded</option>
-      <option value="offline">Offline</option>
-    </select>
-
-    <label for="login">Strona logowania</label>
-    <select id="login">
-      <option value="online">Online</option>
-      <option value="degraded">Degraded</option>
-      <option value="offline">Offline</option>
-    </select>
-
-    <label for="db">Baza danych</label>
-    <select id="db">
-      <option value="online">Online</option>
-      <option value="degraded">Degraded</option>
-      <option value="offline">Offline</option>
-    </select>
-
-    <label for="notifications">Powiadomienia</label>
-    <select id="notifications">
-      <option value="online">Online</option>
-      <option value="degraded">Degraded</option>
-      <option value="offline">Offline</option>
-    </select>
-
-    <button onclick="saveStatuses()">Zapisz</button>
-  </div>
+  <div class="service-editor" id="form-container"></div>
 
   <script>
-    const fields = ["main-server", "api", "login", "db", "notifications", "discord", "tryb Offline", "status Systemu oeracyjnego"];
+    const services = {
+      "main-server": "Serwer Główny",
+      "api": "API",
+      "login": "Strona logowania",
+      "db": "Baza danych",
+      "notifications": "Powiadomienia",
+      "discord": "Discord Server",
+      "offline-mode": "Tryb Offline",
+      "system-status": "System operacyjny"
+    };
+
+    const container = document.getElementById("form-container");
+
+    function createForm() {
+      for (const key in services) {
+        const label = document.createElement("label");
+        label.setAttribute("for", key);
+        label.textContent = services[key];
+
+        const select = document.createElement("select");
+        select.id = key;
+        ["online", "degraded", "offline"].forEach(status => {
+          const option = document.createElement("option");
+          option.value = status;
+          option.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+          select.appendChild(option);
+        });
+
+        container.appendChild(label);
+        container.appendChild(select);
+      }
+
+      const btn = document.createElement("button");
+      btn.textContent = "Zapisz";
+      btn.onclick = saveStatuses;
+      container.appendChild(btn);
+
+      loadStatuses();
+    }
 
     function saveStatuses() {
-      fields.forEach(field => {
-        const value = document.getElementById(field).value;
-        localStorage.setItem("status_" + field, value);
-      });
-      alert("Zapisano statusy!");
+      for (const key in services) {
+        const val = document.getElementById(key).value;
+        localStorage.setItem("status_" + key, val);
+      }
+      alert("Statusy zostały zapisane!");
     }
 
     function loadStatuses() {
-      fields.forEach(field => {
-        const stored = localStorage.getItem("status_" + field);
+      for (const key in services) {
+        const stored = localStorage.getItem("status_" + key);
         if (stored) {
-          document.getElementById(field).value = stored;
+          const select = document.getElementById(key);
+          if (select) select.value = stored;
         }
-      });
+      }
     }
 
-    loadStatuses();
+    createForm();
   </script>
 </body>
 </html>
