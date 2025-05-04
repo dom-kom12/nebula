@@ -1,47 +1,41 @@
-const CACHE_NAME = 'offline-cache-v1';
+const CACHE_NAME = 'nebula-cache-v1';
+const OFFLINE_URL = 'off.html';
+
 const urlsToCache = [
   '/',
+  '/index.html',
   '/off.html',
-  'assets/scripts/script.js',
-  '/discord.html'
 ];
 
-// Instalacja service workera
-self.addEventListener('install', (event) => {
+// Instalacja – cache’ujemy pliki
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Cache otwarte!');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
   );
+  self.skipWaiting();
 });
 
-// Aktywacja service workera
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+// Aktywacja – czyścimy stare cache
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then(keyList => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
+        keyList.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
       );
     })
   );
+  self.clients.claim();
 });
 
-// Fetch (z sieci lub z cache)
-self.addEventListener('fetch', (event) => {
+// Fetch – serwujemy offline.html gdy nie ma internetu
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request);
-      })
+    fetch(event.request).catch(() => {
+      if (event.request.mode === 'navigate') {
+        return caches.match(OFFLINE_URL);
+      }
+    })
   );
 });
