@@ -53,7 +53,79 @@
 <body>
     <h1>Brak Połączenia z Internetem</h1>
     <p>Obecnie jesteś offline. A że nasza Strona Jest Rozbudowana Możesz z niektóych funkcji skorzystać Offline :)</p>
-    <script src="/status-check.js"></script>
+  <h1>Strona Główna OFFLINE</h1>
 
+  <!-- Wyszukiwanie podstron -->
+  <div>
+    <h2>Szukaj podstron</h2>
+    <input id="search" placeholder="Wpisz frazę" oninput="searchPages()" />
+    <ul id="results"></ul>
+  </div>
+
+  <!-- Zegar -->
+  <div>
+    <h2>Do premiery:</h2>
+    <div id="countdown"></div>
+  </div>
+
+  <div>
+    <h2>Kontakt</h2>
+    <input id="contact-name" placeholder="Twój Email" />
+    <input id="contact-msg" placeholder="Wiadomość" />
+    <button onclick="sendContact()">Wyślij Do Administracji Servera Discord</button>
+  </div>
+
+  <script>
+
+    // Wyszukiwanie podstron
+    const pages = [
+      { file: 'index.html', title: 'Strona główna' },
+      { file: 'home.html', title: 'Nasza strona główna' },
+      { file: 'kontakt.html', title: 'Kontakt z nami' },
+      { file: 'info.html', title: 'Informacje' }
+    ];
+
+    function searchPages() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const res = document.getElementById('results');
+      res.innerHTML = '';
+      if (q.trim() === '') return;
+
+      pages.forEach(p => {
+        if (p.title.toLowerCase().includes(q) || p.file.toLowerCase().includes(q)) {
+          const li = document.createElement('li');
+          li.innerHTML = `➤ <a href="${p.file}">${p.file}</a> – ${p.title}`;
+          res.appendChild(li);
+        }
+      });
+    }
+
+    // Zegar do daty (np. event)
+    const targetDate = new Date('2025-06-21T15:30:00');
+    setInterval(() => {
+      const now = new Date();
+      const diff = targetDate - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+      document.getElementById('countdown').innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
+    }, 1000);
+
+    // Formularz kontaktowy (np. webhook do Discorda)
+    function sendContact() {
+      const name = document.getElementById('contact-name').value;
+      const msg = document.getElementById('contact-msg').value;
+      fetch('https://discord.com/api/webhooks/1368603126298312784/0QcdUfmxRXiog9Tooxdvs25pV6pz7hOLS9I5dtnCRyHJX7f2m3BsD9WMoG1NRuLBM9v_', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: `📩 Wiadomość od ${name}: ${msg}` })
+      });
+      alert('Wysłano wiadomość!');
+    }
+  </script>
+</body>
+</html>
+    <script src="/status-check.js"></script>
 </body>
 </html>
