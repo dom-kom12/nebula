@@ -31,7 +31,7 @@
       border: 1px solid #ccc;
     }
     button {
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 10px 15px;
       background-color: #2196f3;
       color: white;
@@ -43,6 +43,7 @@
 </head>
 <body>
   <h1>Panel Administratora – Status Usług</h1>
+
   <div class="service-editor" id="form-container"></div>
 
   <script>
@@ -58,7 +59,8 @@
       "reporting": "Raportowanie",
       "storage": "Usługa Przechowywania",
       "chat-service": "Serwis Czatów",
-      "media-service": "Usługa Mediów"
+      "media-service": "Usługa Mediów",
+      "system-status": "System Operacyjny"
     };
 
     const container = document.getElementById("form-container");
@@ -82,10 +84,15 @@
         container.appendChild(select);
       }
 
-      const btn = document.createElement("button");
-      btn.textContent = "Zapisz";
-      btn.onclick = saveStatuses;
-      container.appendChild(btn);
+      const saveBtn = document.createElement("button");
+      saveBtn.textContent = "Zapisz wszystkie";
+      saveBtn.onclick = saveStatuses;
+      container.appendChild(saveBtn);
+
+      const toggleBtn = document.createElement("button");
+      toggleBtn.textContent = "Przełącz 'main-server'";
+      toggleBtn.onclick = toggleMainServer;
+      container.appendChild(toggleBtn);
 
       loadStatuses();
     }
@@ -106,6 +113,18 @@
           if (select) select.value = stored;
         }
       }
+    }
+
+    function toggleMainServer() {
+      const select = document.getElementById("main-server");
+      if (!select) return alert("Nie znaleziono pola 'main-server'");
+
+      const current = select.value.toLowerCase();
+      const newStatus = current === "offline" ? "online" : "offline";
+      select.value = newStatus;
+      localStorage.setItem("status_main-server", newStatus);
+
+      alert(`Status 'main-server' ustawiono na: ${newStatus}`);
     }
 
     createForm();
