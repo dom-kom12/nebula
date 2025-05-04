@@ -3,6 +3,7 @@ const urlsToCache = [
   '/',
   '/off.html',
   'assets/scripts/script.js',
+  '/discord.html'
 ];
 
 // Instalacja service workera
