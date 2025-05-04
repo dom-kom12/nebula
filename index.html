@@ -30,6 +30,11 @@
       padding: 1.5rem;
       text-align: center;
     }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+    }
   </style>
 </head>
 <body>
@@ -43,7 +48,6 @@
     <div class="bold">
       <a href="about.html"><button><strong>O Nas</strong></button></a>
       <a href="discord.html"><button><strong>Nasz Discord</strong></button></a>
-      <div class="bold"></div>
       <p><strong>Nie Masz Sieci???</strong></p>
       <a href="off.html"><button><strong>Wciśnij mnie</strong></button></a>
     </div>
@@ -53,26 +57,6 @@
     <p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
   </footer>
 
-<script>
-  async function checkSystemStatus() {
-    try {
-      const response = await fetch('/status-page.html');
-      const html = await response.text();
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const status = doc.querySelector('#system-status')?.textContent.trim().toLowerCase();
-
-      if (status === 'offline' && !window.location.pathname.includes('system-offline.html')) {
-        window.location.href = '/system-offline.html';
-      }
-    } catch (error) {
-      console.error('Błąd sprawdzania statusu systemu:', error);
-    }
-  }
-
-  setInterval(checkSystemStatus, 5000);
-</script>
-
+  <script src="status-check.js"></script>
 </body>
 </html>
