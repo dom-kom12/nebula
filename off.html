@@ -3,78 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Off Page</title>
+    <title>Tryb Offline</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
+            background-color: #fce4e4;
+            color: #333;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .offline-message {
-            display: none;
             text-align: center;
-            padding: 20px;
-            background-color: #ffcc00;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
         }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #c0392b;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
         button {
             padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
+            font-size: 1rem;
+            background-color: #c0392b;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #a93226;
         }
     </style>
 </head>
 <body>
+    <h1>Brak Połączenia z Internetem</h1>
+    <p>Obecnie jesteś offline. Sprawdź swoje połączenie z siecią.</p>
+    <button onclick="goBack()">Powrót</button>
 
-<div class="offline-message" id="offlineMessage">
-    <p>Nie wykryto połączenia z siecią. Czy chcesz przejść na stronę offline?</p>
-    <button id="goOfflineButton">OK</button>
-</div>
-
-<script>
-    // Rejestracja Service Workera
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('Service Worker Registered', registration);
-        })
-        .catch(error => {
-            console.log('Service Worker Registration Failed', error);
-        });
-    }
-
-    // Funkcja, która sprawdza połączenie z siecią
-    function checkConnection() {
-        if (!navigator.onLine) {
-            document.getElementById('offlineMessage').style.display = 'block';
-        } else {
-            document.getElementById('offlineMessage').style.display = 'none';
+    <script>
+        function goBack() {
+            window.location.href = 'index.html';
         }
-    }
-
-    // Funkcja do przekierowania użytkownika na stronę offline
-    document.getElementById('goOfflineButton').addEventListener('click', function() {
-        window.location.href = 'https://nebula-git-main-dominiks-projects-73f694c7.vercel.app/off';
-    });
-
-    // Sprawdzanie połączenia co 1 sekundę
-    setInterval(checkConnection, 1000);
-
-    // Początkowe sprawdzenie połączenia
-    checkConnection();
-</script>
-
+    </script>
 </body>
 </html>
