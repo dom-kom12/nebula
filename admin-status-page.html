@@ -43,7 +43,7 @@
 </head>
 <body>
   <h1>Panel Administratora – Status Usług</h1>
-  <div class="service-editor" id="form-container"></div> <!-- ✅ Poprawnie -->
+  <div class="service-editor" id="form-container"></div>
 
   <script>
     const services = {
@@ -71,8 +71,6 @@
 
         const select = document.createElement("select");
         select.id = key;
-        select.classList.add("status-dropdown");
-
         ["online", "degraded", "offline"].forEach(status => {
           const option = document.createElement("option");
           option.value = status;
