@@ -112,39 +112,24 @@
     <footer>
         <p class="bold">© 2025 Wszelkie Prawa Zastrzeżone!</p>
     </footer>
+<script>
+  // Rejestracja Service Workera
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log("Service Worker zarejestrowany."))
+      .catch(error => console.error("Błąd rejestracji SW:", error));
+  }
 
-    <script>
-        // Funkcja sprawdzająca połączenie
-        function checkConnection() {
-            // Sprawdzamy status połączenia
-            if (!navigator.onLine) {
-                document.getElementById('offlineMessage').style.display = 'block'; // Pokazuje komunikat offline
-            } else {
-                document.getElementById('offlineMessage').style.display = 'none'; // Ukrywa komunikat offline, gdy jest połączenie
-            }
-        }
+  // Co sekundę sprawdź połączenie i zapytaj o przejście do trybu offline
+  setInterval(() => {
+    if (!navigator.onLine) {
+      const confirmOffline = confirm("Nie wykryto połączenia z Internetem. Czy chcesz przejść do strony offline?");
+      if (confirmOffline) {
+        window.location.href = 'off.html';
+      }
+    }
+  }, 1000);
+</script>
 
-        // Funkcja uruchamiająca przekierowanie na stronę offline
-        function checkOffline() {
-            if (!navigator.onLine) {
-                document.getElementById('offlineMessage').style.display = 'block'; // Pokazuje komunikat offline
-            } else {
-                window.location.href = 'off.html'; // Jeśli jest połączenie, przekierowujemy na stronę offline
-            }
-        }
-
-        // Funkcja przejścia na stronę offline po kliknięciu w przycisk
-        document.getElementById('goOfflineButton').addEventListener('click', function() {
-            window.location.href = 'off.html'; // Po kliknięciu przechodzimy na stronę offline
-        });
-
-        // Sprawdzamy połączenie zaraz po załadowaniu strony
-        window.onload = function() {
-            checkConnection();
-        }
-
-        // Sprawdzamy połączenie co 1 sekundę
-        setInterval(checkConnection, 1000);
-    </script>
 </body>
 </html>
