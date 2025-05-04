@@ -1,63 +1,69 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tryb Offline</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    .offline {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Off Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .offline-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <h1>Witaj na stronie offline!</h1>
-  <p>Twoje połączenie z internetem: <span id="status">Ładowanie...</span></p>
-  <p id="offline-message" class="offline">Brak połączenia z Internetem</p>
 
-  <div id="content">
-    <h2>Treść dostępna offline!</h2>
-    <p>Ta strona może działać offline, dzięki pamięci podręcznej.</p>
-  </div>
+<div class="offline-message" id="offlineMessage">
+    <p>Nie wykryto połączenia z siecią. Czy chcesz przejść na stronę offline?</p>
+    <button id="goOfflineButton">OK</button>
+</div>
+
 <script>
-  // Sprawdzanie statusu połączenia
-function updateConnectionStatus() {
-  const status = document.getElementById('status');
-  const offlineMessage = document.getElementById('offline-message');
-  
-  if (navigator.onLine) {
-    status.innerText = 'Połączono z Internetem';
-    offlineMessage.style.display = 'none';
-  } else {
-    status.innerText = 'Brak połączenia';
-    offlineMessage.style.display = 'block';
-  }
-}
+    // Funkcja, która sprawdza połączenie z siecią
+    function checkConnection() {
+        if (!navigator.onLine) {
+            document.getElementById('offlineMessage').style.display = 'block';
+        } else {
+            document.getElementById('offlineMessage').style.display = 'none';
+        }
+    }
 
-// Rejestracja service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(() => {
-      console.log('Service Worker zarejestrowany pomyślnie!');
-    })
-    .catch(error => {
-      console.log('Błąd rejestracji Service Worker:', error);
+    // Funkcja do przekierowania użytkownika na stronę offline
+    document.getElementById('goOfflineButton').addEventListener('click', function() {
+        window.location.href = 'https://nebula-git-main-dominiks-projects-73f694c7.vercel.app/off';
     });
-}
 
-// Nasłuchiwanie zmian w połączeniu z internetem
-window.addEventListener('online', updateConnectionStatus);
-window.addEventListener('offline', updateConnectionStatus);
+    // Sprawdzanie połączenia co 1 sekundę
+    setInterval(checkConnection, 1000);
 
-// Na początku strony
-window.onload = updateConnectionStatus;
-
+    // Początkowe sprawdzenie połączenia
+    checkConnection();
 </script>
+
 </body>
 </html>
