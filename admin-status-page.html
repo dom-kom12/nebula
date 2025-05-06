@@ -45,20 +45,6 @@
   <h1>Panel Administratora – Status Usług</h1>
 
   <div class="service-editor" id="form-container"></div>
-  <button onclick="updateStatus()">Zapisz</button>
-
-  <script>
-    function updateStatus() {
-      const status = document.getElementById('statusInput').value;
-      fetch('/api/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: status })
-      })
-      .then(res => res.json())
-      .then(data => alert('Status zapisany!'));
-    }
-  </script>
   <script>
     const services = {
       "main-server": "Serwer Główny",
