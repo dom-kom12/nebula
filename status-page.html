@@ -49,8 +49,23 @@
     <tbody id="status-body"></tbody>
   </table>
   <div id="system-status">offline</div> <!-- zmień na "online" aby działało normalnie -->
-  <div id="status">Ładowanie...</div>
+  <h2>Status serwera</h2>
+<ul id="status-history"></ul>
 
+<script>
+  fetch('/api/status-history')
+    .then(res => res.json())
+    .then(history => {
+      const list = document.getElementById('status-history');
+      history.reverse().forEach(entry => {
+        const li = document.createElement('li');
+        const date = new Date(entry.date).toLocaleString();
+        li.textContent = `${date} ➤ ${entry.status}`;
+        list.appendChild(li);
+      });
+    });
+</script>
+  <div id="status">Ładowanie...</div>
 <script>
   function loadStatus() {
     fetch('/api/get-status')
