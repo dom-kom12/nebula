@@ -49,6 +49,21 @@
     <tbody id="status-body"></tbody>
   </table>
   <div id="system-status">offline</div> <!-- zmień na "online" aby działało normalnie -->
+  <div id="status">Ładowanie...</div>
+
+<script>
+  function loadStatus() {
+    fetch('/api/get-status')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('status').innerText = data.message;
+      });
+  }
+
+  loadStatus();
+  setInterval(loadStatus, 3000); // odśwież co 3 sekundy
+</script>
+
   <script>
     const services = {
       "main-server": "Serwer Główny",
